@@ -60,12 +60,18 @@ if (hasAcceptableQuality(w3)) ...
 ![image](https://user-images.githubusercontent.com/33726146/110080448-d0d01e80-7dcd-11eb-8f93-b3fa4b57a68e.png)
 ![image](https://user-images.githubusercontent.com/33726146/110080507-e5acb200-7dcd-11eb-9f59-bb0403607c07.png)
 
+#### 3. private copy constructor
+- non-copyable class가 됨
+- copy constructor가 private인 객체로 새로운 객체를 생성할 때 컴파일 에러 발생
+
+#### 4. copy constructor의 인자가 passed by reference인 이유
+- passed by value면 copy constructor가 호출됨 (?)
+
 ### Copy Assignment Operator
 ```c++
 Widget w1, w2;
 w1 = w2;  //Copy Assignment Operator
 ```
-
 
 ##### Reference
 - https://www.geeksforgeeks.org/copy-constructor-in-cpp/

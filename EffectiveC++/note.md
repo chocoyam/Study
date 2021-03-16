@@ -66,3 +66,11 @@ int a = 5, b = 0;
 CALL_WITH_MAX(++a, b);  //a 두번 증가
 CALL_WITH_MAX(++a, b+10); //a 한번 증가
 ```
+
+```c++
+template<typename T>
+inline void callWithMax(const T& a, const T& b)
+{
+  f(a > b ? a: b);
+}
+```

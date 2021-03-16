@@ -20,7 +20,7 @@ const double AspectRatio = 1.653;  //prefer this
 - 만약 ASPECT_RATIO를 사용하는 부분에서 compile 에러 나면 ASPECT_RATIO가 아닌 1.653으로 에러 발생하기 때문에 디버깅 소요 시간 증가
 - 그리고 #define 매크로 사용은 const보다 코드 양이 증가할 수 있음
 
-## Precautions 
+## const 
 ### 1) const pointer
 - 포인터 타입을 const로 선언할 때 포인터(주소) 값과 포인터가 가리키는 대상의 값도 const로 지정
 ```c++
@@ -37,3 +37,19 @@ private:
   ...
 };
 ```
+
+## enum
+### 1) enum hack
+- const 
+```c++
+class GamePlayer {
+private:
+  enum {
+    NumTurns = 5  //enum hack
+  };
+  
+  int scores[NumTurns];
+  ...
+}
+```
+## inline

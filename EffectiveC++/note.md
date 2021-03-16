@@ -40,7 +40,9 @@ private:
 
 ## enum
 ### 1) enum hack
-- const 
+- const 보다 #define과 유사함
+- enum은 #define 처럼 pointer나 reference로 접근 못하므로 (const 상수는 접근 가능) 더 강제성 있고 메모리를 사용하지 않음
+- template metaprogramming의 기초적인 기술
 ```c++
 class GamePlayer {
 private:
@@ -52,4 +54,15 @@ private:
   ...
 }
 ```
+
 ## inline
+### 1) macro 함수 대체
+- 매크로 함수는 가독성 문제로 정의 할 때 괄호 맞추기가 힘듦
+- 증가/감소 연산자를 매크로 함수의 인자로 넣을 경우 함수가 호출되기 전에 증가/감소 연산자가 수행되는 문제 발생
+```c++
+#define CALL_WITH_MAX(a,b) f((a) > (b) ? (a) : (b))
+
+int a = 5, b = 0;
+CALL_WITH_MAX(++a, b);  //a 두번 증가
+CALL_WITH_MAX(++a, b+10); //a 한번 증가
+```

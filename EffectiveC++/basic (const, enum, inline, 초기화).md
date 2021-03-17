@@ -92,5 +92,6 @@ const char * const p = greeting;  //둘 다 const
 ```
 
 #### STL iterator
-
+- An iterator acts much like a T* pointer
+- 
 

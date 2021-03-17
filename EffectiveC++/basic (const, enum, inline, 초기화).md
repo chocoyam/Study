@@ -75,9 +75,12 @@ inline void callWithMax(const T& a, const T& b)
 # Use const whenever possible
 const는 어떤 객체가 수정되면 안된다는 의미적 제약
 ## 1) const 사용 범위
-- class 외부 : global/namespace 범위의 상수, file/function/block 범위의 static 객체
-- class 내부 : static/non-static 멤버 변수
-- pointer : pointer 값(주소값)이 const인지, pointer가 가리키는 데이터가 const인지 (혹은 둘 다)
+#### class 외부
+global/namespace 범위의 상수, file/function/block 범위의 static 객체
+#### class 내부
+static/non-static 멤버 변수
+#### pointer
+pointer 값(주소값)이 const인지, pointer가 가리키는 데이터가 const인지 (혹은 둘 다)
 
 ## 2) pointer에서의 const
 #### const 위치에 따라 다른 의미 가짐

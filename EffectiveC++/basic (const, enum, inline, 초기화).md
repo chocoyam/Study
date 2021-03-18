@@ -72,7 +72,7 @@ inline void callWithMax(const T& a, const T& b)
 </br>
 </br>
 
-# Use const whenever possible
+# Use const whenever possible (Item3)
 const는 어떤 객체가 수정되면 안된다는 의미적 제약
 ## 1) const 사용 범위
 #### class 외부
@@ -96,5 +96,17 @@ const char * const p = greeting;  //둘 다 const
 
 #### STL iterator
 - An iterator acts much like a T* pointer
-- 
+```c++
+using namespace std;
+
+vector<int> vec;
+...
+const vector<int>::iterator iter = vec.begin();  //T* const
+*iter = 10;
+++iter; //error
+
+vector<int>::const_iterator cIter = vec.begin();  //const T*
+*cIter = 10;  //error
+++cIter;
+```
 

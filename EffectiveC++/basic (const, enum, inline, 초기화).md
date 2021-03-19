@@ -70,19 +70,34 @@ inline void callWithMax(const T& a, const T& b)
 }
 ```
 </br>
-</br>
 
 # Use const whenever possible (Item3)
 const는 어떤 객체가 수정되면 안된다는 의미적 제약
-## 1) const 사용 범위
-#### class 외부
+## const 사용 범위
+- class 외부   
 global/namespace 범위의 상수, file/function/block 범위의 static 객체
-#### class 내부
+- class 내부   
 static/non-static 멤버 변수
-#### pointer
+- pointer   
 pointer 값(주소값)이 const인지, pointer가 가리키는 데이터가 const인지 (혹은 둘 다)
+</br>
 
-## 2) pointer에서의 const
+## 함수 declaration에서의 const
+return 값, parameters, 함수 전체(?)에 사용
+#### return 값이 const인 경우
+```c++
+class Rational {...};
+const Rational operator*(const Rational& lhs, const Rational& rhs);
+
+Rational a, b, c;
+...
+(a * b) = c;  //error, const return value can prevent this case.
+...
+if (a * b = c) ...  //"==" -> "=" 실수 예방가능
+```
+</br>
+
+## pointer에서의 const
 #### const 위치에 따라 다른 의미 가짐
 ```c++
 char greeting[] = "Hello";
@@ -109,4 +124,6 @@ vector<int>::const_iterator cIter = vec.begin();  //const T*
 *cIter = 10;  //error
 ++cIter;
 ```
+</br>
+
 

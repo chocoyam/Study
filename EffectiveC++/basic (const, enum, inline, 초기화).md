@@ -73,10 +73,10 @@ inline void callWithMax(const T& a, const T& b)
 
 
 # Use const whenever possible (Item3)
-* const는 어떤 객체가 수정되면 안된다는 의미적 제약
-* const로 선언하면 컴파일러가 usage error를 잡아줄 수 있음
-* 컴파일러는 bitwise constness를 준수하지만, logical constness를 사용해서 프로그래밍 해야함
-* const 멤버함수와 non-const 멤버 함수는 필연적으로 구현이 중복됨으로 non-const 함수에서 const 함수를 호출하도록 함(const 캐스팅 이용)
+> const는 어떤 객체가 수정되면 안된다는 의미적 제약   
+> const로 선언하면 컴파일러가 usage error를 잡아줄 수 있음   
+> 컴파일러는 bitwise constness를 준수하지만, logical constness를 사용해서 프로그래밍 해야함   
+> const 멤버함수와 non-const 멤버 함수는 필연적으로 구현이 중복됨으로 non-const 함수에서 const 함수를 호출하도록 함(const 캐스팅 이용)   
 ## const 사용 범위
 - class 외부   
 global/namespace 범위의 상수, file/function/block 범위의 static 객체

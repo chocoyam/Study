@@ -178,8 +178,29 @@ std::size CTextBlock::length() const {
   return textLength;
 }
 ```
+#### const 멤버 함수와 non-const 멤버 함수의 중복 피하기
+* const 멤버 함수와 non-const 멤버 함수는 내부 동작이 중복됨
+* 중복 제거를 위해 non-const 멤버 함수에서 const 멤버 함수를 호출하는 방법
+* casting은 지양되지만 코드 중복이 더 재앙
+```c++
+class TextBlock {
+public:
+  const char& operator[](std::size_t position) const; //
+  {
+    ... //범위 체크 등
+    return text[position];
+  }
+  
+  char& operator[](std::size_t position)
+  {
+    return const_cast<char&>(static_cast<const TextBlock&)(*this)[position]); //operation[]의 리턴타입은 const 제거,
+                                                                              //*this(non-const object)는 const로 캐스팅해서 const operator[] 호출
+  }
+}
+```
+* const 객체를 non-const로 캐스팅 하는 것은 객체가 변경될 위험이 있음
+* 반면에 non-const 객체는 const 관련된 위험이 없기 때문에 (객체가 수정되어도 됨으로) non-const 객체를 const_cast 캐스팅을 하는게 나음
 </br>
-
 
 ## pointer에서의 const
 #### const 위치에 따라 다른 의미 가짐

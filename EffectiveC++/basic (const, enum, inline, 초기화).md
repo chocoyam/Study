@@ -72,7 +72,7 @@ inline void callWithMax(const T& a, const T& b)
 </br>
 
 
-# Use const whenever possible (Item3)
+# 가능한 const  (Item3)
 > const는 어떤 객체가 수정되면 안된다는 의미적 제약   
 > const로 선언하면 컴파일러가 usage error를 잡아줄 수 있음   
 > 컴파일러는 bitwise constness를 준수하지만, logical constness를 사용해서 프로그래밍 해야함   
@@ -235,4 +235,54 @@ vector<int>::const_iterator cIter = vec.begin();  //const T*
 </br>
 
 
+# 객체 사용 전에 꼭 초기화(initialize) 하기 (Item4)
+## Why?
+- C++에서는 객체 초기화 안하면 자동으로 0으로 초기화가 될수도 있고 초기화가 아예 안될수도 있음
+- 그리고 초기화되지 않은 데이터를 읽는 것은 undefined behavior을 발생시킴
+</br>
 
+## 초기화 규칙
+- 초기화 규칙은 객체 타입마다 달라서 복잡함 그래서 항상 객체 사용 전에 초기화 하자
+#### built-in 타입의 일반 변수(non-member object)는 직접 초기화
+```c++ 
+int x = 0;
+const char* text = "A C-stype string";
+double d;
+std::cin >> d;
+``` 
+#### 클래스 안의 객체는 모두 constructor에서 초기화
+- initialize != assignment
+- 클래스 멤버 변수의 초기화는 constructor의 body에 들어가기 전에 수행됨
+- 객체 초기화는 constructor의 initialization list를 사용
+- 그런데 built-in 타입의 경우 assignment 전에 초기화 됐다는 보장은 없음(?)
+```c++
+class PhoneNumber {...};
+class ABEntry {
+public:
+  ABEntry(const std::string& name, const std::string& address, const std::list<phoneNumber>& phones);
+  
+private:
+  std::string theName;
+  std::string theAddress;
+  std::list<PhoneNumber> thePhones;
+  int numTimesConsulted;
+};
+
+ABEntry::ABEntry(const std::string& name, const std::string& address, const std::list<phoneNumber>& phones)
+: theName(name),
+  theAddress(address),
+  thePhones(phones),
+  numTimesConsulted(0)
+{
+
+}
+
+/* this is assignment */
+//ABEntry::ABEntry(const std::string& name, const std::string& address, const std::list<phoneNumber>& phones)
+//{
+//  theName = name;
+//  theAddress = address;
+//  thePhones = phones
+//  numTimesConsulted = 0;
+//}
+```

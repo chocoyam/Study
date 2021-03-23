@@ -72,7 +72,7 @@ inline void callWithMax(const T& a, const T& b)
 </br>
 
 
-# 가능한 const  (Item3)
+# 가능한 const 사용하기 (Item3)
 > const는 어떤 객체가 수정되면 안된다는 의미적 제약   
 > const로 선언하면 컴파일러가 usage error를 잡아줄 수 있음   
 > 컴파일러는 bitwise constness를 준수하지만, logical constness를 사용해서 프로그래밍 해야함   
@@ -243,6 +243,7 @@ vector<int>::const_iterator cIter = vec.begin();  //const T*
 
 ## 초기화 규칙
 - 초기화 규칙은 객체 타입마다 달라서 복잡함 그래서 항상 객체 사용 전에 초기화 하자
+
 #### built-in 타입의 일반 변수(non-member object)는 직접 초기화
 ```c++ 
 int x = 0;
@@ -250,6 +251,7 @@ const char* text = "A C-stype string";
 double d;
 std::cin >> d;
 ``` 
+
 #### 클래스 안의 객체는 모두 constructor에서 초기화
 - initialize != assignment
 - 클래스 멤버 변수의 초기화는 constructor의 body에 들어가기 전에 수행됨
@@ -274,7 +276,6 @@ ABEntry::ABEntry(const std::string& name, const std::string& address, const std:
   thePhones(phones),
   numTimesConsulted(0)
 {
-
 }
 
 /* this is assignment */
@@ -286,3 +287,25 @@ ABEntry::ABEntry(const std::string& name, const std::string& address, const std:
 //  numTimesConsulted = 0;
 //}
 ```
+- constructor에서 assignment를 이용해 초기화는 하는 것은 멤버 변수들의 default constructor가 호출된 다음에 다시 assignment가 이루어지므로 효율적이지 않음 (default constructor에서 한 셋팅 작업이 무의미해짐)
+- initialization list를 사용하면 각 멤버변수의 constructor에 인자를 넘겨줄 수 있음 (copy constructor를 통해)
+- built-in 타입들은 initialization과 assignment 비용 차이 없지만 일관성을 위해 initialize 하자
+- 멤버 변수를 default constructor로 초기화 하고 싶을때는 초기화 인자를 비워두면 됨
+```c++
+ABEntry::ABEntry()
+:theName(), //call default constructor
+theAddress(), //too
+thePhones(),  //too
+numTumesConsulted(0)
+{
+}
+```
+- 멤버 변수가 const나 reference인 경우 반드시 initialize 하자 (because they cant be assigned(?))
+
+#### 초기화 순서
+- base 클래스는 derived 클래스보다 먼저 초기화됨
+- 클래스 안의 멤버 변수는 선언된 순서대로 초기화됨 (initialization list에 순서가 다르더라도) -> 하지만 만일의 버그를 위해 멤버 변수의 선언 순서와 초기화 순서 동일하게 하자
+
+#### non-local static 객체는 초기화 순서 보장 안됨
+- static 객체는 생성 시점부터 프로그램 종료시 까지 존재 (따라서 스택, 힙 기반 객체들은 제외)
+- 글로벌 객체, namespace 안에 정의된 객체, 클래스 내부에 static으로 정의된 객체, 함수 내부에 static으로 정의된 객체(local static 객체), non-local static 객체 등 

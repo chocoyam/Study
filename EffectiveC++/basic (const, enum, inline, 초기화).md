@@ -306,6 +306,10 @@ numTumesConsulted(0)
 - base 클래스는 derived 클래스보다 먼저 초기화됨
 - 클래스 안의 멤버 변수는 선언된 순서대로 초기화됨 (initialization list에 순서가 다르더라도) -> 하지만 만일의 버그를 위해 멤버 변수의 선언 순서와 초기화 순서 동일하게 하자
 
-#### non-local static 객체는 초기화 순서 보장 안됨
-- static 객체는 생성 시점부터 프로그램 종료시 까지 존재 (따라서 스택, 힙 기반 객체들은 제외)
-- 글로벌 객체, namespace 안에 정의된 객체, 클래스 내부에 static으로 정의된 객체, 함수 내부에 static으로 정의된 객체(local static 객체), non-local static 객체 등 
+#### 여러 translation unit에 정의된 non-local static 객체는 초기화 순서 보장 안됨
+- tranaslation unit()
+    - c++ 컴파일 기본단위
+    - 하나의 object 파일을 생성하는 소스코드와 (directlry or indirectly)include 된 헤더 파일로 구성
+- static 객체
+    - static 객체는 생성 시점부터 프로그램 종료시 까지 존재 (따라서 스택, 힙 기반 객체들은 제외)
+    - 글로벌 객체, namespace 안에 정의된 객체, 클래스 내부에 static으로 정의된 객체, 함수 내부에 static으로 정의된 객체(local static 객체), non-local static 객체 등

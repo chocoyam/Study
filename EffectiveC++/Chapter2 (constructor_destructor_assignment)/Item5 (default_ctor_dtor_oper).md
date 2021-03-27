@@ -19,9 +19,6 @@ public:
   
   Empty& operator=(const Empty& rhs) { ... }    //copy assignment operator
 ```
-</br>
-
-
 #### constructor
 - 사용자가 constructor를 하나라도 정의하면 컴파일러는 default constructor 생성하지 않음
 #### destructor

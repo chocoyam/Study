@@ -3,7 +3,7 @@
 > 따라서 virtual 함수가 하나라도 있으면 해당 class의 destructor를 virtual로 선언하자   
 > bass class로 사용하지 않을거라면 destructor를 virtual로 선언하지 말것   
 
-## base class의 destructor를 virtual로 선언하자
+## 1. base class의 destructor를 virtual로 선언하자
 #### 문제 상황
 - base class와 이를 상속받는 여러 derived class가 있고, base class의 포인터 타입을 리턴하는 팩토리 함수가 있는 상황
 - 이 때 base class의 destructor가 non-virtual일 때 문제 발생
@@ -51,7 +51,7 @@ delete ptk;  //all deleted
 
 </br>
 
-## base class가 아닌데 destructor를 virtual로 선언했을 때의 문제점
+## 2. base class가 아닌데 destructor를 virtual로 선언했을 때의 문제점
 - 데이터 타입의 크기, 다른 언어와의 호환이 중요한 경우
 - class에 virtual 함수가 있는 경우 class에는 vptr이라는 멤버 변수가 추가되어 class를 객체화 했을 때 객체의 크기가 커지게됨
 
@@ -64,7 +64,7 @@ delete ptk;  //all deleted
 
 </br>
 
-## non-virtual destructor인 class는 상속하지 말자
+## 3. non-virtual destructor인 class는 상속하지 말자
 - 맨 위의 [base class의 destructor를 virtual로 선언하자]와 동일한 내용
 - derived class 객체를 base class의 포인터로 객체 delete시 derived class의 destructor가 호출되지 않아 메모리가 완전히 해제 안됨
 

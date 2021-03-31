@@ -51,5 +51,6 @@ delete ptk;  //all deleted
 
 ####  vtbl(virtual table), vptr(virtual table point)
 - vptr과 vtbl은 런타임에 어떤 가상 함수의 구현부를 사용할 것인지 결정하기 위한 정보
-- vtbl은 가상 함수들의 포인터 배열로, class가 가상 함수를 정의할 때마다 vtbl에 해당 함수 포인터가 추가됨
+- vtbl은 가상 함수들의 포인터 배열로, class가 가상 함수를 정의할 때마다 vtbl에 해당 함수 포인터가 추가됨 (컴파일 타임)
+- vtbl이 들고 있는 가상 함수 포인터가 가리키는 실제 함수는 런타임에 결정됨
 - vptr은 vtbl을 가리키는 포인터

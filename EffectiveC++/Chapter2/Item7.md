@@ -1,3 +1,8 @@
+# virtual destructor
+> 다형성에서 base class는 반드시 virtual destrcutor를 선언해야 함   
+> 따라서 virtual 함수가 하나라도 있으면 해당 class의 destructor를 virtual로 선언하자   
+> bass class로 사용하지 않을거라면 destructor를 virtual로 선언하지 말것   
+
 ## base class의 destructor를 virtual로 선언하자
 #### 문제 상황
 - base class와 이를 상속받는 여러 derived class가 있고, base class의 포인터 타입을 리턴하는 팩토리 함수가 있는 상황
@@ -52,7 +57,8 @@ delete ptk;  //all deleted
 
 ####  vtbl(virtual table), vptr(virtual table point)
 - vptr과 vtbl은 런타임에 어떤 가상 함수의 구현부를 사용할 것인지 결정하기 위한 정보
-- vtbl은 가상 함수들의 포인터 배열로, class가 가상 함수를 정의할 때마다 vtbl에 해당 함수 포인터가 추가됨 (컴파일 타임)
+- vtbl은 가상 함수들의 포인터 배열로, class가 가상 함수를 정의할 
+- 때마다 vtbl에 해당 함수 포인터가 추가됨 (컴파일 타임)
 - vtbl이 들고 있는 가상 함수 포인터가 가리키는 실제 함수는 런타임에 결정됨
 - vptr은 vtbl을 가리키는 포인터
 
@@ -61,3 +67,20 @@ delete ptk;  //all deleted
 ## non-virtual destructor인 class는 상속하지 말자
 - 맨 위의 [base class의 destructor를 virtual로 선언하자]와 동일한 내용
 - derived class 객체를 base class의 포인터로 객체 delete시 derived class의 destructor가 호출되지 않아 메모리가 완전히 해제 안됨
+
+</br>
+
+## abstract class를 만들고 싶은데 pure virtual function이 없는 경우 -> pure virtual destructor 선언하기
+```c++
+class AWOV {
+public:
+  ...
+  virtual ~AWOV() = 0;
+};
+```
+#### 상속 관계에서 destructor 호출 순서
+- 최상위 derived class의 destructor가 가장 먼저 호출되고, 이후 base class의 destructor가 하나씩 호출됨
+- 따라서 base class의 pure virtual destructor의 구현부가 명시되어 있어야 함 (Unless, linking error)
+```c++
+AWOV::~AWOV() { }
+```

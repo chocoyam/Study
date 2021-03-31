@@ -43,6 +43,7 @@ delete ptk;  //all deleted
 
 - virtual 함수가 한개라도 있는 class는 반드시 virtual destructor를 가짐
 - non-virtual destructor class는 base class로 사용하지 않을 것임을 나타냄
+
 </br>
 
 ## base class가 아닌데 destructor를 virtual로 선언했을 때의 문제점
@@ -54,3 +55,9 @@ delete ptk;  //all deleted
 - vtbl은 가상 함수들의 포인터 배열로, class가 가상 함수를 정의할 때마다 vtbl에 해당 함수 포인터가 추가됨 (컴파일 타임)
 - vtbl이 들고 있는 가상 함수 포인터가 가리키는 실제 함수는 런타임에 결정됨
 - vptr은 vtbl을 가리키는 포인터
+
+</br>
+
+## non-virtual destructor인 class는 상속하지 말자
+- 맨 위의 [base class의 destructor를 virtual로 선언하자]와 동일한 내용
+- derived class 객체를 base class의 포인터로 객체 delete시 derived class의 destructor가 호출되지 않아 메모리가 완전히 해제 안됨

@@ -70,7 +70,7 @@ delete ptk;  //all deleted
 
 </br>
 
-## abstract class를 만들고 싶은데 pure virtual function이 없는 경우 -> pure virtual destructor 선언하기
+## 4. abstract class를 만들고 싶은데 pure virtual function이 없는 경우 -> pure virtual destructor 선언하기
 ```c++
 class AWOV {
 public:

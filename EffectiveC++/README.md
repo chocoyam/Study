@@ -10,3 +10,4 @@
 - Item5 : compiler-generated functions (ctor, dtor, assignment oper)
 - Item6 : disable compiler-generated functions
 - Item7 : virtual destructor
+- Item8 : exception handling in destructor

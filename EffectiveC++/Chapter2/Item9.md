@@ -54,8 +54,28 @@ public:
   
 private:
   void init() { logTransaction(); }  //calls a virtual
+};
 ```
 - compile, linking 단계에서 잡지 못하고, runtime에 다음과 같은 에러 발생으로 비정상 종료됨
 ![image](https://user-images.githubusercontent.com/33726146/116532777-9ab9a180-a91b-11eb-9281-2185f3881e4d.png)
 
-#### 방법2) 
+#### How To Solve This Problem?
+- 어떻게든 constructor와 destructor에서 virtual 함수 호출하지 않도록 하기
+- Transaction 예제에서는 logTransaction() 함수를 non-virtual 함수로 선언하고 생성자에서 호출
+- 이때 derived 클래스 생성자 인자로 필요한 log 정보를 넘겨 logTransaction() 함수 인자로 넣어 호출할 수 있도록 수정
+```c++
+class Transaction {
+public:
+  explicit Transaction(const std::string& logInfo) { logTransaction(logInfo); }
+  void logTransaction(const std::string& logInfo) const;
+};
+
+class BuyTransaction : public Transaction {
+public:
+  BuyTransaction(parameters)
+  : Transaction(createLogString(parameters)) { ... }
+  
+private:
+  static std::string createLogString(parameters);
+}
+```

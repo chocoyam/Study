@@ -63,6 +63,7 @@ private:
 - 어떻게든 constructor와 destructor에서 virtual 함수 호출하지 않도록 하기
 - Transaction 예제에서는 logTransaction() 함수를 non-virtual 함수로 선언하고 생성자에서 호출
 - 이때 derived 클래스 생성자 인자로 필요한 log 정보를 넘겨 logTransaction() 함수 인자로 넣어 호출할 수 있도록 수정
+- logTransaction() 함수 같은 helper 함수를 static으로 정의하면 더 안전하게 사용할 수 있음
 ```c++
 class Transaction {
 public:

@@ -11,3 +11,4 @@
 - Item6 : disable compiler-generated functions
 - Item7 : virtual destructor
 - Item8 : exception handling in destructor
+- Item9 : do not call virtual functions in constructor or destructor

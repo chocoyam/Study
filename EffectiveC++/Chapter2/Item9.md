@@ -1,5 +1,6 @@
 ## constructor나 destructor에서 virtual 함수 호출하지 말것
-
+> base 클래스의 constructor, destructor에서는   
+> derived 클래스에서 override 한 함수를 호출하지 않기 때문
 ```c++
 //base class
 class Transaction {

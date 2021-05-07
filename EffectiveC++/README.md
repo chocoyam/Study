@@ -12,3 +12,4 @@
 - Item7 : virtual destructor
 - Item8 : exception handling in destructor
 - Item9 : do not call virtual functions in constructor or destructor
+- Item10 : have assginment operator return a reference to current class

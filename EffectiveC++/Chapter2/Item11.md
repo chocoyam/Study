@@ -51,3 +51,29 @@ Widget& Widget::operator=(const Widget& rhs)
   return *this;
 }
 ```
+##### 2)
+```c++
+Widget& Widget::operator=(const Widget& rhs)
+{
+  Bitmap* pOrigin = pb;
+  pb = new Bitmap(*rhs.pb);
+  delete pOrigin;
+  
+  return *this;
+}
+```
+
+##### 3)
+```c++
+void Widget::swap(Widget& rhs)
+{
+  ...
+}
+
+Widget& Widget::operator=(const Widget& rhs)
+{
+  Widget temp(rhs);
+  swap(temp);
+  return *this;
+}
+```

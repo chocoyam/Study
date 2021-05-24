@@ -51,7 +51,9 @@ Widget& Widget::operator=(const Widget& rhs)
   return *this;
 }
 ```
-##### 2)
+- 하지만 여전히 예외 발생 가능
+- new Bitmap()으로 bitmap 메모리 할당 시 메모리 부족 같은 이유로 인해 Widget의 pb는 delete 된 Bitmap을 가리키고 있을 수 있음
+##### 2) 삭제->생성 순에서 생성->삭제로 순서 변경
 ```c++
 Widget& Widget::operator=(const Widget& rhs)
 {

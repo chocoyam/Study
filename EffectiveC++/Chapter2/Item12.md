@@ -60,7 +60,8 @@ private:
 * PriorityCustomer.cc
 */
 PriorityCustomer::PriorityCustomer(const PriorityCustomer& rhs)
-: priority(rhs.priority)
+: Customer(rhs),      //반드시 bass class의 copy constructor 호출
+  priority(rhs.priority)
 {
   logCall("PriorityCustomer copy constructor");
 }
@@ -68,6 +69,8 @@ PriorityCustomer::PriorityCustomer(const PriorityCustomer& rhs)
 PriorityCustomer& PriorityCustomer::operator=(const PriorityCustomer& rhs)
 {
   logCall("PriorityCustomer copy assignment operator");
+  
+  Customer::operator=(rhs);   //반드시 bass class의 assignment operator 호출
   priority = rhs.priority;
   return *this;
 }

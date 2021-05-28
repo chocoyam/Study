@@ -12,4 +12,6 @@
 - Item7 : virtual destructor
 - Item8 : exception handling in destructor
 - Item9 : do not call virtual functions in constructor or destructor
-- Item10 : have assginment operator return a reference to current class
+- Item10 : assginment operator should return a reference to current class
+- Item11 : self assignment situation
+- Item12 : perfect way to make your own copy function

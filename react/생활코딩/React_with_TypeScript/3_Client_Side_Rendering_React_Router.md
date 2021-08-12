@@ -63,21 +63,63 @@ class App extends React.Component<{}, {}> {
 </br>
 
 ### 3. Router Props
-#### URL Parageter Routing
-``Route path="/post/:postId" component={Post}/>``   
+#### Route path에 :postId 파라미터 선언
 ```js
-const Post = () => {
+<Route path="/post/:postId" component={Post}/>
+```
+
+#### :postId 파라미터 값을 DOM에서 가져오는 방법
+- react-router-dom에서 제공하는 RouteComponentProps를 통해 접근 가능
+- typescript니 RouteComponentProps에 타입 지정해주기
+```js
+const Post = (props: RouteComponentProps<{ postId: string }>) => {
   return (
-    <h3>Post</h3>
+    <h3>Post {props.match.params.postId}</h3>
   );
 }
 ```
 
-- Route path에 :postId 파라미터 선언
+#### RouteComponentProps가 가진 객체
+- match : path 정보와 관련된 내용 (isExact, params, path, url 등)
+- location : url을 다루기 쉽게 쪼개서 가지고 있음. 브라우저의 window.location 객체와 비슷
+- history : 주소를 임의로 변경하거나 되돌아갈 수 있음. 브라우저의 window.history 객체와 비슷한데 SPA 동작 방식에 맞게 페이지 일부만 렌더한다는 점이 다름
 ```js
-...
-<Route path="/posts/:postId" component={Post}/>
-...
+//RouteComponentProps의 history 사용예제
+//next 버튼 누르면 현재 postid + 1 된 주소로 이동
+const Post = (props: RouteComponentProps<{ postId: string }>) => {
+  function goNextPost() {
+    const nextPostId = +props.match.params.postId + 1;
+    props.history.push(`/posts/${nextPostId}`);
+  }
+
+  return (
+    <div>
+      <h3>Post {props.match.params.postId}</h3>
+      <button onClick={goNextPost}>next</button>
+    </div>
+  );
+}
+```
+
+#### Query String 파싱하기
+- Query String은 url에 ?key=value 포맷의 String
+- DOM 단에서는 RouteComponentProps의 location.search 객체를 통해 Query String 가져올 수 있음
+- search 객체는 파싱되지 않은 상태기 때문에 URLSearchParams 객체를 사용해 파싱된 값 가져올 수 있음 (URLSearchParams은 브라우저 지원율이 낮아서 다른 Query String 관련 오픈소스를 많이 )
+```js
+const Post = (props: RouteComponentProps<{ postId: string }>) => {
+  function goNextPost() {
+    const nextPostId = +props.match.params.postId + 1;
+    props.history.push(`/posts/${nextPostId}`);
+  }
+
+  return (
+    <div>
+      <h3>Post {props.match.params.postId}</h3>
+      <p>{new URLSearchParams(props.location.search).get('body')}</p>
+      <button onClick={goNextPost}>next</button>
+    </div>
+  );
+}
 ```
 
 

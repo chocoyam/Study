@@ -104,7 +104,7 @@ const Post = (props: RouteComponentProps<{ postId: string }>) => {
 #### Query String 파싱하기
 - Query String은 url에 ?key=value 포맷의 String
 - DOM 단에서는 RouteComponentProps의 location.search 객체를 통해 Query String 가져올 수 있음
-- search 객체는 파싱되지 않은 상태기 때문에 URLSearchParams 객체를 사용해 파싱된 값 가져올 수 있음 (URLSearchParams은 브라우저 지원율이 낮아서 다른 Query String 관련 오픈소스를 많이 )
+- search 객체는 파싱되지 않은 상태기 때문에 URLSearchParams 객체를 사용해 파싱된 값 가져올 수 있음 (URLSearchParams은 브라우저 지원율이 낮아서 다른 Query String 관련 오픈소스를 많이 씀)
 ```js
 const Post = (props: RouteComponentProps<{ postId: string }>) => {
   function goNextPost() {

@@ -124,6 +124,78 @@ const Post = (props: RouteComponentProps<{ postId: string }>) => {
 
 </br>
 
-### 중첩 라우팅
+### 4. 중첩 Routing
+- Routing을 여러 컴포넌트에 걸쳐서 단계별로 정의하는 기법
+- Routing을 최상위 컴포넌트에 한번에 다 정의하게 되면 유지보수가 어려움
+- 특정 url의 하위로 갈라질 수 있는 경로는 해당 url을 처리하는 Component에서 하위 경로의 Route를 명시
+```js
+...
+<Route path="/posts" component={PostList}/>
+...
+const PostList = (props: RouteComponentProps<{ postId: string }>) => {
+  return (
+  <div>
+    <Route exact = {true} path = {props.match.url} render = {() => <h3>PostList</h3>}></Route>
+    <Route path = {`${props.match.url}/:postId`} component = {Post}></Route>
+  </div>
+  )
+}
+```
 
+</br>
+
+### 5. Switch
+- <Route> 모듈의 exact 속성과 관련
+- <Route>를 <Switch> 태그로 감싸서 사용
+- <Route> 중 위에서부터 첫번째로 매치되는 것만 Render되므로 순서에 유의
+- <Switch> 내부에 path 속성이 지정되지 않은 <Route>의 경우, 매치되는 <Route> 컴포넌트가 없을 때 동작함 (default 기능)
+```js
+...
+<Switch>
+  <Route exact={true} path="/" component={Home}/>
+  <Route path="/intro" render={() => <h3>소개</h3>}/>
+  <Route path="/posts" component={PostList}/>
+  <Route component = {NotFound}/>
+</Switch>
+...
+const NotFound = () => {
+  return (
+    <h3>Not Found</h3>
+  );
+}
+```
+
+</br>
+  
+### 6. Redirect
+- 마운트 되면 Redirect에 지정한 경로로 이동
+- 현재 주소를 교환하는 replace 방식 (history에 남지 않음)
+- location 객체를 통해 Redirect 할 수도 있음
+
+```js
+...
+<Route path="/admin" component={Admin}/>
+...
+const Admin = () => {
+  const isAdmin = false; //임의로 설정
+  return isAdmin ? <h3>Admin</h3> : <Redirect to="/"/>;
+}
+```
+  
+#### old url을 new url로 redirect 하고 싶을 때
+- from 속성에 old url, to 속성에 new url 지정
+- from은 Switch와 함께 있을 때만 사용 가능
+```js
+<Switch>
+  <Route exact={true} path="/" component={Home}/>
+  <Route path="/intro" render={() => <h3>소개</h3>}/>
+  <Redirect from="/about" to="/intro"/>
+  <Route path="/posts" component={PostList}/>
+  <Route path="/admin" component={Admin}/>
+  <Route component = {NotFound}/>
+</Switch>
+```
+  
+</br>
+  
 

@@ -99,3 +99,84 @@ server.listen(3000);
   - "serve": "npm run build && node build-server/server.js"
 - ``npm run serve`` 명령어로 server 실행
 - localhost:3000 접속
+
+</br>
+
+### 4. Express로 SSR 제공하기
+- client side에서는 src/index.tsx에 있는 \<App> 컴포넌트는 Document(index.html) 상에 root 라는 id에 렌더링됨
+- server side에서는 \<App> 컴포넌트를 renderToString api를 이용해 Document 상에 직접 넣어주는 방식
+#### index.html에 \<App> 컴포넌트가 들어갈 부분 메타태그 넣기
+```js
+//public/index.html
+...
+<body>
+  ...
+  <div id="root">{{SSR}}</div>
+  ...
+</body>
+...
+```
+
+#### \<App> 컴포넌트를 html 문자열로 변환하기
+- App Element를 ReactDOMServer.renderToString() api를 이용해 html 문자열로 가져옴
+- index.html 파일을 fs를 통해 가져오고 문자열 replace ({{SSR}} -> App 컴포넌트의 html 문자열로)
+```js
+//src/server.ts
+import * as fs from 'fs';
+import * as path from 'path';
+import * as http from 'http';
+import express from 'express';
+
+import * as React from 'react';
+import * as ReactDOMServer from 'react-dom/server';
+
+import App from './App';
+
+const app = express();
+
+const staticFiles = [
+    '/static/*',
+    '/asset-manifest.json',
+    '/manifest.json',
+    '/service-worker.js',
+    '/favicon.ico',
+    '/logo.svg'
+];
+
+staticFiles.forEach(file => {
+    app.get(file, (req, res) => {
+        const filePath = path.join(__dirname, '../build', req.url);
+        res.sendFile(filePath);
+    });
+});
+
+app.get('*', (req, res) => {
+    const html = path.join(__dirname, '../build/index.html');
+    const htmlData = fs.readFileSync(html).toString();
+
+    //App 컴포넌트를 html 문자열로
+    const ReactApp = ReactDOMServer.renderToString(React.createElement(App));
+    const renderedHtml = htmlData.replace('{{SSR}}', ReactApp);
+    res.status(200).send(renderedHtml);
+})
+
+const server = http.createServer(app);
+
+server.listen(3000);
+```
+
+#### css, svg 추가 처리
+- 클라이언트의 경우 css, svg는 webpack을 이용해서 js로 합쳐짐
+- 서버에서는 tsc로 빌드하기 때문에 css, svg를 사용할 수 없음
+  - 서버에서도 webpack을 사용하거나
+  - App.tsx를 수정
+    - App.tsx의 App.css import 구문을 index.tsx로 이동
+    - logo.svg 파일을 public으로 이동하고 express에서 static으로 제공
+
+#### Postman으로 요청 결과 확인하기
+- App 컴포넌트가 html로 박혀있는걸 볼 수 있음
+
+</br>
+
+#### cf. Server Side Rendering은 로딩 처음에 수행되고 이후는 Client Side Rendering이 진행됨
+

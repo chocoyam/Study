@@ -145,10 +145,10 @@ const PostList = (props: RouteComponentProps<{ postId: string }>) => {
 </br>
 
 ### 5. Switch
-- <Route> 모듈의 exact 속성과 관련
-- <Route>를 <Switch> 태그로 감싸서 사용
-- <Route> 중 위에서부터 첫번째로 매치되는 것만 Render되므로 순서에 유의
-- <Switch> 내부에 path 속성이 지정되지 않은 <Route>의 경우, 매치되는 <Route> 컴포넌트가 없을 때 동작함 (default 기능)
+- \<Route> 모듈의 exact 속성과 관련
+- \<Route>를 \<Switch> 태그로 감싸서 사용
+- \<Route> 중 위에서부터 첫번째로 매치되는 것만 Render되므로 순서에 유의
+- \<Switch> 내부에 path 속성이 지정되지 않은 \<Route>의 경우, 매치되는 \<Route> 컴포넌트가 없을 때 동작함 (default 기능)
 ```js
 ...
 <Switch>
@@ -167,7 +167,7 @@ const NotFound = () => {
 
 </br>
   
-### 6. Redirect
+### 6. \<Redirect>
 - 마운트 되면 Redirect에 지정한 경로로 이동
 - 현재 주소를 교환하는 replace 방식 (history에 남지 않음)
 - location 객체를 통해 Redirect 할 수도 있음
@@ -198,4 +198,19 @@ const Admin = () => {
   
 </br>
   
-
+### 7. \<NavLink>
+- 특별한 \<Link>
+- to 속성에 지정한 path와 url이 일치하는 경우 특별한 스타일, 클래스 적용 가능
+- 네비게이션에 active 스타일을 적용하기 위한 컴포넌트
+- activeStyle, activeClass 속성으로 스타일 지정 가능 (activeStyle은 css 파일 작성 없이 사용 가능)
+```js
+...
+<nav>
+  <ul>
+    <li><NavLink exact={true} activeStyle={{ fontSize:24 }} to="/">Home</NavLink></li>
+    <li><NavLink exact={true} activeStyle={{ fontSize:24 }} to="/intro">소개</NavLink></li>
+    <li><NavLink exact={true} activeStyle={{ fontSize:24 }} to="/admin">어드민</NavLink></li>
+  </ul>
+</nav>
+...
+```

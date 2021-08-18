@@ -12,6 +12,8 @@
   - import react-redux
   - connect 함수를 이용해 컴포넌트에 연결
 
+</br>
+
 ### 2. action?
 - Json Object
 - payload 있는 액션과 없는 액션 두 가지
@@ -39,7 +41,7 @@
 
 </br>
 
-### Reducer
+### 3. Reducer
 - 액션을 적용한 결과를 만드는 함수
 - Pure Function (?)
 - Immutable -> Object Spread (?)
@@ -104,7 +106,7 @@
 
 </br>
 
-### 3. Store
+### 4. Store
 > createStore(Reducer);
 
 

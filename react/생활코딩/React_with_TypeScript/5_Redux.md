@@ -107,7 +107,33 @@
 </br>
 
 ### 4. Store
-> createStore(Reducer);
+> createStore(Reducer, initialValue);
+#### createStore
+  -  Definition
+    - \<S>(reducer: Reducer\<S>, preloadedState: S, enhancer?: StoreEnhancer\<S>): Store\<S>;
+#### store
+  - Store\<S> Definition
+  - \<S> : state의 Generic
+  ``store.getState();`` -> 현재 상태의 state 반환
+  ``store.dispatch(action);`` -> action 보내는것
+  ``store.subscribe(listener);`` -> dispatch()를 통해 변경이 일어나면 store가 subscribe()를 호출해서 listener 함수를 실행
+  ``store.replaceReducer(anotherReducer);``
+
+</br>
+
+### 5. Summary
+1. 액션 타입 만들기
+2. 액션 생성 함수 만들기
+3. 리듀서 만들기
+4. 스토어만들기
+5. createStore위해 redux, @types/redux 추가
+
+</br>
+
+### 6. Redux 안쓰기 vs Redux 쓰기
+
+
+
 
 
 

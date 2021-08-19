@@ -19,12 +19,12 @@
 ### 2. 만들어보기
 1. store 클래스 생성
 2. store 클래스 내부에 감시할 state 객체 추가하고 @observable 데코레이터 붙이기
-  - 리액트의 state와 다름
-  - object 또는 primitive
+    - 리액트의 state와 다름
+    - object 또는 primitive
 3. state 값을 다루는 함수 생성
-  - getter/setter
-  - action 역할 하는 함수
-  - mutable!
+   - getter/setter
+   - action 역할 하는 함수
+    - mutable!
 4. state 값을 사용할 컴포넌트 생성하고 @observer 데코레이터 붙이기
 5. 컴포넌트에서 state 값을 사용하거나 값을 변경하는 함수 호출 
 

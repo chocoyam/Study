@@ -117,11 +117,46 @@ export default App;
   - 데코레이터 없이 사용하는 방식
   - SFC에 붙여서 사용
   - 리액트 state를 사용하지 않을거면 SFC로 해도 문제 없음
-- decorator 형태
+- decorator 형태   
   ``@observer <컴포넌트 클래스>``
-  - 리액트의 life cycle이 아닌 mobx의 life cycle을 따름
+  - 리액트의 life cycle이 아닌 mobx의 life cycle을 따름 (다음 순서로 수행)
     - componentWillReact
     - componentWillUpdate
     - componentDidUpdate
   
+```js
+//function 형태
+const StatelessApp = observer(() => {
+  function addAge(): void {
+    ageState.addAge();
+  }
+  return (
+    <div>
+      {ageState.getAge()}
+      <button onClick={() => addAge()}>plus</button>
+    </div>
+  );
+});
+
+//decorator 형태
+@observer
+class App extends React.Component<{}, {}> {
+  constructor(props: {}) {
+    super(propsP;
+    this.addAge = this.addAge.bind(this);
+  }
   
+  render() {
+    return {
+      <div>
+        {ageState.getAge()}
+        <button onClick={() => this.addAge()}>plus</button>
+      </div>
+    }
+  }
+  
+  addAge() {
+    ageState.addAge();
+  }
+}
+```

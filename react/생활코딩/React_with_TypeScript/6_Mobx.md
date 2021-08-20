@@ -16,7 +16,7 @@
 
 </br>
 
-### 2. 만들어보기
+### 2. 간단하게 만들어보기
 1. store 클래스 생성
 2. store 클래스 내부에 감시할 state 객체 추가하고 @observable 데코레이터 붙이기
     - 리액트의 state와 다름
@@ -83,7 +83,9 @@ export default App;
 >  ``npm install --save-dev mobx-react-devtools``   
 >  ``import DevTools from 'mobx-react-devtools;``   
 
-#### observable
+</br>
+
+### 4. observable
 - function 형태   
   ``observable(<value>)``
   - 데코레이터 없이 사용하는 방식
@@ -110,8 +112,10 @@ export default App;
   
   const ageState = new AgeState();
   ```
+
+</br>
   
-#### observer
+### 5. observer
 - function 형태   
   ``observer(<컴포넌트>);``
   - 데코레이터 없이 사용하는 방식
@@ -161,7 +165,9 @@ class App extends React.Component<{}, {}> {
 }
 ```
 
-#### computed
+</br>
+
+### 6. computed
 - 특징
   - getter에만 붙일 수 있음
   - 실제 컴포넌트에서 사용하는 값의 getter에 computed를 사용하면 최소 범위로 변경할 수 있음   
@@ -202,7 +208,9 @@ class AppState {
 }
 ```
 
-#### action
+</br>
+
+### 7. action
 - 특징
   - state를 수정하는 함수
     - 어디에 state를 수정하는 함수가 있는지 마킹
@@ -211,6 +219,10 @@ class AppState {
     - strict 모드 설정 방법
       - tsconfig.json에 ``"enforceActions": true``로 셋팅
   - computed의 setter는 action
+  - action으로 지정된 함수는 트랜잭션 처리가 됨
+    - action 안에 observable 프로퍼티가 여러개인 경우
+    - 프로퍼티 수정할 때마다 render가 다시되지 않고 마지막에 한번에 render함
+    - action 수행을 완료하지 못하고 중간에 중단되는 경우, 수정됐던 프로퍼티들은 이전 상태로 돌아감 (rollback)
 ```js
 //store.tsx
 
@@ -230,5 +242,55 @@ class Store {
 ...
 
 ```
+
+</br>
+
+### 8. provider
+- 특징
+  - Redux의 프로바이더와 동일
+  - 프로바이더에 props로 넣고, @inject로 꺼내서 props로 사용하는 개념
+  - 명시적이고 편리
+  - 컨테이너 쓰지 않아도 됨
+
+```js
+ReactDOM.render(
+  <Provider store={ageStore}>
+    <App />
+  </Provider>,
+  document.getElementById('root') as HTMLElement
+);
+
+@inject('store')
+@observer
+class App extends React.Component<{ store?: IAgeState; }, {}> {
+  render() {
+    const store = this.props.store as IAgeState;
+    return (
+      <div className="App">
+        <DevTools />
+        <p className="App-intro">
+          {store.age}
+          <button onClick={() => store.addAge()}>plus</button>
+          <button onClick={() => store.addAgeAsync()}>async call</button>
+        </p>
+      </div>
+    );
+  }
+}
+```
+
+</br>
+
+### 9. autorun
+- 로그 출력할때 사용
+
+</br>
+
+### 10. ToDo 앱 만들기
+
+
+
+
+
 
 

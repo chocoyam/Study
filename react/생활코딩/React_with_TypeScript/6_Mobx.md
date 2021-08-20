@@ -160,3 +160,75 @@ class App extends React.Component<{}, {}> {
   }
 }
 ```
+
+#### computed
+- 특징
+  - getter에만 붙일 수 있음
+  - 실제 컴포넌트에서 사용하는 값의 getter에 computed를 사용하면 최소 범위로 변경할 수 있음   
+   ex. 40살이 넘었을 때만 나이를 올리려고 하면 40살 이하일 때는 렌더링 불필요한 경우
+  - 내부적으로 최적화 (render 최소화)
+    - 계산에 사용핼 observable 값이 변경될때,
+    - 다른 computed 또는 reaction에 의해 호출될 때 재실행
+    - observable이 변했는데 computed가 변하지 않았을때 차이(?)
+- function 형태   
+  ``computed(<함수>);``
+  - 데코레이터 없이 사용하는 방식
+  - 별 의미 없음
+- decorator 형태   
+  ``@computed``
+  - 클래스의 getter에
+
+```js
+//function 형태
+class AgeState {
+  constructor() {
+    extendObservable(this, {
+      _age: 35,
+      age: computed(function() {
+        return (this._age > 40) ? this._age : 0;
+      })
+    })
+  }
+}
+
+//decorator 형태
+class AppState {
+  @observable
+  private _age: number = 35;
+  @computed
+  get age(): number {
+    return (this._age >40) ? this._age : 0;
+  }
+}
+```
+
+#### action
+- 특징
+  - state를 수정하는 함수
+    - 어디에 state를 수정하는 함수가 있는지 마킹
+    - untracked, transaction 및 allowStateChanges로 래핑하고 리턴
+  - optional이지만 mobx에서 useStrict 모드를 쓸 경우 action을 마킹하지 않으면 런타임에러 발생
+    - strict 모드 설정 방법
+      - tsconfig.json에 ``"enforceActions": true``로 셋팅
+  - computed의 setter는 action
+```js
+//store.tsx
+
+...
+
+class Store {
+    @observable
+    age: number = 27;
+    
+    @action
+    addAge = () => {
+        this.age++;
+    }
+
+}
+
+...
+
+```
+
+

@@ -74,3 +74,54 @@ class App extends React.Component<{}, {}> {
 
 export default App;
 ```
+
+</br>
+
+### 3. mobx-react-devtools
+> 디버깅용 툴을 제공하는 컴포넌트
+> </br>   
+>  ``npm install --save-dev mobx-react-devtools``   
+>  ``import DevTools from 'mobx-react-devtools;``   
+
+#### observable
+- function 형태   
+  ``observable(<value>)``
+  - 데코레이터 없이 사용하는 방식
+  - @ 없이 함수처럼 사용해서 리턴한 객체 사용
+- decorator 형태   
+  ``@observable <클래스 프로퍼티>``
+  - 데코레이터 사용하는 방식
+  - 클래스 내부 프로퍼티 앞에 붙여서 사용
+  - 한 클래스 안에 여러개 @observable 존재
+  - 타입스크립트는 이 방식으로!
+  
+  ```js
+  import { observable } from 'mobx';
+  
+  //function 형태
+  const list = observable({1, 2, 4});
+  const isLogin = observable(true);
+  const age = observable({age: 35});
+  
+  class AgeState {
+    @observable
+    private _age = 35;
+  }
+  
+  const ageState = new AgeState();
+  ```
+  
+#### observer
+- function 형태   
+  ``observer(<컴포넌트>);``
+  - 데코레이터 없이 사용하는 방식
+  - SFC에 붙여서 사용
+  - 리액트 state를 사용하지 않을거면 SFC로 해도 문제 없음
+- decorator 형태
+  ``@observer <컴포넌트 클래스>``
+  - 리액트의 life cycle이 아닌 mobx의 life cycle을 따름
+    - componentWillReact
+    - componentWillUpdate
+    - componentDidUpdate
+  
+  

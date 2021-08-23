@@ -282,12 +282,46 @@ class App extends React.Component<{ store?: IAgeState; }, {}> {
 </br>
 
 ### 9. autorun
-- 로그 출력할때 사용
+- observable 변경 시 변경 관련 로그 출력할때 사용
 
 </br>
 
+### 10. Mobx Tips
+> - useStrict
+> - Provider & Inject
+> - Container & Presentational Components
+> - Reactions
 
+#### useStrict
+- 최상위 컴포넌트에서 ``useStrict(ture)`` 지정하면 활성화
+- observable 변경하는 함수에 action 사용 강제성 부여
+- 트랜잭션화되어 성능 개선
 
+#### Provider & Inject
+- store를 singleton으로 설정하면
+  - 테스트에 많응ㄴ mocking 필요
+  - 각 컴포넌트에서 필요 이상의 store에 있는 데이터를 다룰 수 있음
+- store를 Provider / Inject 형태로 설정하면
+  - Provider에 store를 넣어주기 전 store 객체 생성하고
+  - 테스트 시에도 테스트별로 store 생성 가능
+  - inject를 사용해 store에서 필요한 데이터만 컴포넌트에 전달 가능 
+  - 
+#### Container & Presentational Components
+- Redux Best Practices 중 하나
+- Container Components
+  - 일반적으로 inject로 higher order component 구성
+  - 필요한 데이터를 store에서 가져와 정제
+  - store의 값을 변경하는 로직에 대해 관여
+- Presentational Component
+  - 어떻게 보여줄건지
+  - 전달받은 props 및 state를 사용해 데이터 출력
 
-
-
+#### Reactions
+- Mobx 핵심기능
+- autorun, autorunAsync, reaction, when
+- observable, computed 값이 변경될 때마다 실행
+- 매우 강력하지만 프로그램의 흐름을 읽기 어려워지기 쉬움
+  - 가능하면 Reaction 대신 명시적인 로직처리를 권장
+- 디버깅 용이를 위해 각 Reaction에 이름 붙이기 (error 났을때 id 값이 아닌 이름으로 알려줌)
+- 각 Reaction 실행 시 dispose할 수 있는 함수 반환
+  - 효율성을 위해 필요 없어진 경우 반드시 dispose 함수 실행

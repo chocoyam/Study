@@ -286,9 +286,6 @@ class App extends React.Component<{ store?: IAgeState; }, {}> {
 
 </br>
 
-### 10. ToDo 앱 만들기
-
-
 
 
 

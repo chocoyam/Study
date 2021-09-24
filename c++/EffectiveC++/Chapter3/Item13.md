@@ -18,3 +18,6 @@ void f() {
   delete pInv;
 }
 ```
+
+### auto_ptr
+- 

@@ -1,4 +1,5 @@
 # JQuery Intro
+- https://www.w3schools.com/jquery/default.asp
 ## 1. JQuery란?
 ### > 자바스크립트 라이브러리
 - 자바스크립트를 쉽고 간단하게 사용하기 위한 자바스크립트 라이브러리
